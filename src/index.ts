@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { schema } from "./graphql/schema";
+import { getUser, getAllUsers, createUser, createMultipleUsers } from "./services/user";
+import { getAllPayments } from "./services/payments";
 
 dotenv.config();
 const PORT = Number(process.env.PORT);
@@ -12,13 +14,13 @@ const server = new ApolloServer({
     Query: {
       hello: () => "Hello, World!",
       helloUser: () => "Hello, User!",
-      getUser: () => {
-        return {
-          id: 1,
-          name: "John Doe",
-          email: "john.doe@example.com",
-        };
-      },
+      getUser: (_, { id }) => getUser(id),
+      getAllUsers: () => getAllUsers(),
+      getAllPayments: () => getAllPayments(),
+    },
+    Mutation: {
+      createUser: (_, { name, email, phone }) => createUser(name, email, phone),
+      createMultipleUsers: () => createMultipleUsers(),
     },
   },
 });
