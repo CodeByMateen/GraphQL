@@ -1,0 +1,37 @@
+query ExampleQuery($getUserById: ID!) {
+  getAllUsers {
+    name
+  }
+  getAllPayments {
+    amount
+    id
+    paymentDate
+    method
+  }
+}
+
+mutation CreateUserMutation {
+  createMultipleUsers {
+    id
+    name
+    email
+    phone
+    createdAt
+  }
+}
+
+mutation CreatePaymentMutation{
+  createMultiplePayments {
+    id
+    userId
+    amount
+    status
+    paymentDate
+    method
+    user {
+      id
+      name
+      email
+    }
+  }
+}
